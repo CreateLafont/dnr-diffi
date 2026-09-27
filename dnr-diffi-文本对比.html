@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<!--
+DnR Diffi v1.0.0 | SPDX-License-Identifier: MIT
+
+MIT License
+
+Copyright (c) 2026 DnR
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="application-name" content="DnR Diffi">
+<meta name="description" content="DnR Diffi 是单文件、离线可用的三栏文本对比与文案修订工具。高亮原稿与改稿的增删差异，支持忽略换行、空白、大小写和常见中英文标点，并提供本地版本历史。">
+<title>DnR Diffi - 文本对比</title>
+<link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzgxMV84MTkpIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy41OTk2IDEuNjMyNzdlLTA5QzE5LjgzOTggMS42MzI3N2UtMDkgMjAuOTYwOCAtMC4wMDA0MjcwNjcgMjEuODE2NCAwLjQzNTU0N0MyMi41Njg5IDAuODE5MDE2IDIzLjE4MSAxLjQzMTA5IDIzLjU2NDUgMi4xODM1OUMyNC4wMDA0IDMuMDM5MjQgMjQgNC4xNjAxOCAyNCA2LjQwMDM5VjE3LjU5OTZDMjQgMTkuODM5OCAyNC4wMDA0IDIwLjk2MDggMjMuNTY0NSAyMS44MTY0QzIzLjE4MSAyMi41Njg5IDIyLjU2ODkgMjMuMTgxIDIxLjgxNjQgMjMuNTY0NUMyMC45NjA4IDI0LjAwMDQgMTkuODM5OCAyNCAxNy41OTk2IDI0SDYuNDAwMzlDNC4xNjAxOCAyNCAzLjAzOTI0IDI0LjAwMDQgMi4xODM1OSAyMy41NjQ1QzEuNDMxMDkgMjMuMTgxIDAuODE5MDE2IDIyLjU2ODkgMC40MzU1NDcgMjEuODE2NEMtMC4wMDA0MjcwNjcgMjAuOTYwOCAxLjYzMzQ1ZS0wOSAxOS44Mzk4IDEuNjMzNDVlLTA5IDE3LjU5OTZWNi40MDAzOUMxLjYzMzQ1ZS0wOSA0LjE2MDE4IC0wLjAwMDQyNzA2NyAzLjAzOTI0IDAuNDM1NTQ3IDIuMTgzNTlDMC44MTkwMTYgMS40MzEwOSAxLjQzMTA5IDAuODE5MDE2IDIuMTgzNTkgMC40MzU1NDdDMy4wMzkyNCAtMC4wMDA0MjcwNjcgNC4xNjAxOCAxLjYzMjc3ZS0wOSA2LjQwMDM5IDEuNjMyNzdlLTA5SDE3LjU5OTZaTTYgNFY2SDEyQzE1LjMxMzcgNiAxOCA4LjY4NjI5IDE4IDEyQzE4IDE1LjMxMzcgMTUuMzEzNyAxOCAxMiAxOEg0VjIwSDEyQzE2LjQxODMgMjAgMjAgMTYuNDE4MyAyMCAxMkMyMCA3LjU4MTcyIDE2LjQxODMgNCAxMiA0SDZaTTQgNi41VjguNUgxMS43NUMxMy42ODMgOC41IDE1LjI1IDEwLjA2NyAxNS4yNSAxMkMxNS4yNSAxMy45MzMgMTMuNjgzIDE1LjUgMTEuNzUgMTUuNUg2VjE3LjVIMTEuNzVMMTIuMDMzMiAxNy40OTMyQzE0LjkzOTIgMTcuMzQ1OCAxNy4yNSAxNC45NDI2IDE3LjI1IDEyQzE3LjI1IDguOTYyNDMgMTQuNzg3NiA2LjUgMTEuNzUgNi41SDRaIiBmaWxsPSIjMEI0NUU1Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfODExXzgxOSI+CjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4=">
+<style>
+@font-face{
+  font-family:"DnR OPPOSans";
+  src:local("OPPOSans-R"),local("OPPOSans R"),local("OPPOSans-Regular"),local("OPPO Sans Regular");
+  font-style:normal;font-weight:400;
+}
+@font-face{
+  font-family:"DnR OPPOSans";
+  src:local("OPPOSans-M"),local("OPPOSans M"),local("OPPOSans-Medium"),local("OPPO Sans Medium");
+  font-style:normal;font-weight:500;
+}
+@font-face{
+  font-family:"DnR OPPOSans";
+  src:local("OPPOSans-B"),local("OPPOSans B"),local("OPPOSans-Bold"),local("OPPO Sans Bold");
+  font-style:normal;font-weight:700;
+}
+@font-face{
+  font-family:"DnR PingFang SC";
+  src:local("PingFangSC-Regular"),local("PingFang SC Regular");
+  font-style:normal;font-weight:400;
+}
+@font-face{
+  font-family:"DnR PingFang SC";
+  src:local("PingFangSC-Medium"),local("PingFang SC Medium");
+  font-style:normal;font-weight:500;
+}
+@font-face{
+  font-family:"DnR PingFang SC";
+  src:local("PingFangSC-Semibold"),local("PingFang SC Semibold"),local("PingFangSC-Bold"),local("PingFang SC Bold");
+  font-style:normal;font-weight:600;
+}
+@font-face{
+  font-family:"DnR PingFang SC";
+  src:local("PingFangSC-Bold"),local("PingFang SC Bold");
+  font-style:normal;font-weight:700;
+}
+/* ───────── 设计令牌：全局唯一来源，新元素只允许复用这些值 ───────── */
+:root{
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --r1:4px; --r2:8px;
+  --f1:12px; --f2:14px; --f3:16px; --f4:20px;
+  --ease:cubic-bezier(.2,.8,.2,1); --d1:120ms; --d2:200ms;
+  --sans:"DnR OPPOSans","OPPOSans","OPPO Sans","DnR PingFang SC","PingFang SC",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Inter,"Microsoft YaHei",sans-serif;
+  --mono:"DnR OPPOSans","OPPOSans","OPPO Sans","DnR PingFang SC","PingFang SC",ui-monospace,SFMono-Regular,"JetBrains Mono",Menlo,Consolas,"Liberation Mono","Microsoft YaHei",monospace;
+  --accent:#0B45E5; --add:#259462; --del:#D14A43;
+}
+html[data-theme="dark"]{
+  --bg0:#19191A; --bg2:#313133;
+  --shade:rgb(25 25 26 / .30);
+  --fg1:#F5F5F2; --fg2:#A8A8A8;
+  --accent-soft:rgb(11 69 229 / .30);
+  --add-soft:rgb(67 217 141 / .08);
+  --del-soft:rgb(255 107 107 / .08);
+}
+html[data-theme="light"]{
+  --bg0:#F5F5F2; --bg2:#DBDBD9;
+  --shade:rgb(25 25 26 / .15);
+  --fg1:#19191A; --fg2:#757575;
+  --accent-soft:rgb(11 69 229 / .15);
+  --add-soft:rgb(67 217 141 / .15);
+  --del-soft:rgb(255 107 107 / .15);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg0);color:var(--fg1);
+  font:400 var(--f2)/1.5 var(--sans);
+  overflow:hidden;-webkit-font-smoothing:antialiased;
+  transition:background-color var(--d2) var(--ease),color var(--d2) var(--ease);
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--accent)}
+.app{height:100vh;display:grid;grid-template-rows:56px 44px 1fr}
+
+/* ───────── 命令条 ───────── */
+.bar{display:flex;align-items:center;gap:var(--s4);padding:0 var(--s4);border-bottom:1px solid var(--bg2)}
+.brand{display:flex;align-items:center;gap:var(--s2);width:220px;flex:none}
+.mark{width:24px;height:24px;display:grid;place-items:center;flex:none}
+.brand-name{font-size:var(--f3);font-weight:600;letter-spacing:-.01em}
+
+.score{flex:1;display:flex;align-items:baseline;justify-content:center;gap:var(--s3);min-width:0}
+.s-num{font-size:var(--f4);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.s-num.add{color:var(--add)} .s-num.del{color:var(--del)}
+.s-same{display:flex;align-items:center;gap:var(--s2);font-size:var(--f2);font-weight:500;color:var(--add)}
+.s-same::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--add)}
+.s-hint{font-size:var(--f2);color:var(--fg2)}
+.score[data-state="diff"] .s-same,.score[data-state="diff"] .s-hint{display:none}
+.score[data-state="same"] .s-nums,.score[data-state="same"] .s-hint{display:none}
+.score[data-state="empty"] .s-nums,.score[data-state="empty"] .s-same{display:none}
+.s-nums{display:flex;align-items:baseline;gap:var(--s3)}
+
+.actions{width:220px;flex:none;display:flex;justify-content:flex-end;gap:var(--s1)}
+.ibtn{
+  width:30px;height:30px;border-radius:var(--r1);color:var(--fg2);
+  display:grid;place-items:center;transition:background var(--d1) var(--ease),color var(--d1) var(--ease);
+}
+.ibtn:hover{background:var(--bg2);color:var(--fg1)}
+.ibtn:active{transform:scale(.94)}
+.ibtn>svg,.icon{width:15px;height:15px;display:block;flex:none}
+html[data-theme="dark"] .i-sun{display:block} html[data-theme="dark"] .i-moon{display:none}
+html[data-theme="light"] .i-sun{display:none} html[data-theme="light"] .i-moon{display:block}
+
+/* ───────── 版本历史浮层 ───────── */
+.history-scrim{position:fixed;inset:0;z-index:20;background:var(--shade);opacity:0;pointer-events:none;transition:opacity var(--d2) var(--ease)}
+.history-scrim.is-open{opacity:1;pointer-events:auto}
+.history-drawer{
+  position:fixed;top:12px;right:12px;bottom:12px;width:min(360px,calc(100vw - 24px));
+  z-index:21;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--bg0);border:1px solid var(--bg2);border-radius:var(--r2);
+  box-shadow:0 18px 60px var(--shade);transform:translateX(calc(100% + 24px));visibility:hidden;
+  transition:transform var(--d2) var(--ease),visibility 0s linear var(--d2)
+}
+.history-drawer.is-open{transform:translateX(0);visibility:visible;transition-delay:0s}
+.history-head{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s3) var(--s3) var(--s4);border-bottom:1px solid var(--bg2);flex:none}
+.history-head-copy{min-width:0;flex:1}
+.history-title{font-size:var(--f3);font-weight:600}
+.history-subtitle{margin-top:2px;font-size:var(--f1);color:var(--fg2)}
+.history-close{flex:none}
+.history-list{min-height:0;overflow-y:auto;padding:var(--s2);scrollbar-width:thin;scrollbar-color:var(--bg2) transparent}
+.history-list::-webkit-scrollbar{width:10px}
+.history-list::-webkit-scrollbar-thumb{background:var(--bg2);border-radius:5px;border:3px solid transparent;background-clip:padding-box}
+.history-row{display:block;width:100%;padding:var(--s3);margin:0 0 var(--s1);border:1px solid transparent;border-radius:var(--r1);text-align:left;color:var(--fg1);background:transparent;cursor:pointer}
+.history-row:hover{background:var(--bg2)}
+.history-row.is-current{background:var(--accent-soft);border-color:var(--bg2)}
+.history-row-top{display:flex;align-items:center;gap:var(--s2);min-width:0}
+.history-row-title{font-size:var(--f2);font-weight:500;white-space:nowrap}
+.history-row-current{font-size:var(--f1);color:var(--fg1);white-space:nowrap}
+.history-row-time{margin-left:auto;font-size:var(--f1);color:var(--fg2);white-space:nowrap}
+.history-row-summary{display:block;margin-top:var(--s1);font-size:var(--f1);color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.history-empty{padding:var(--s5) var(--s3);font-size:var(--f2);color:var(--fg2);text-align:center}
+.history-foot{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);padding:var(--s2) var(--s3);border-top:1px solid var(--bg2);flex:none}
+.history-foot-note{font-size:var(--f1);color:var(--fg2)}
+.history-foot .history-purge,.history-foot .history-purge:hover{color:var(--del)}
+
+/* ───────── 清空确认 ───────── */
+.confirm-layer{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:var(--s4);background:var(--shade)}
+.confirm-layer[hidden]{display:none}
+.confirm-card{width:min(420px,100%);padding:var(--s5);background:var(--bg0);border:1px solid var(--bg2);border-radius:var(--r2);box-shadow:0 20px 70px var(--shade)}
+.confirm-main{display:flex;gap:var(--s3);align-items:flex-start}
+.confirm-icon{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:var(--r1);color:var(--del);background:var(--del-soft)}
+.confirm-title{font-size:var(--f3);font-weight:600}
+.confirm-text{margin:var(--s2) 0 0;color:var(--fg2);font-size:var(--f2);line-height:1.65}
+.confirm-actions{display:flex;justify-content:flex-end;gap:var(--s2);margin-top:var(--s5)}
+.confirm-actions .ghost{height:30px;padding:0 var(--s3);background:var(--bg2);color:var(--fg1)}
+.danger-btn{height:30px;padding:0 var(--s3);border-radius:var(--r1);font-size:var(--f2);color:var(--del);background:var(--del-soft);transition:opacity var(--d1) var(--ease)}
+.danger-btn:hover{opacity:.78}
+
+/* ───────── 选项轨 ───────── */
+.rail{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);padding:0 var(--s4);border-bottom:1px solid var(--bg2)}
+.chips{display:flex;gap:var(--s1);flex-wrap:nowrap;min-width:0;overflow:hidden}
+.chip{
+  display:flex;align-items:center;gap:var(--s2);white-space:nowrap;
+  height:28px;padding:0 var(--s2) 0 10px;border-radius:var(--r1);
+  font-size:var(--f2);color:var(--fg2);
+  transition:background var(--d1) var(--ease),color var(--d1) var(--ease);
+}
+.chip:hover{background:var(--bg2);color:var(--fg1)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--fg1)}
+.chip-icon{width:15px;height:15px;display:block;flex:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.rail-meta{font-size:var(--f1);color:var(--fg2);white-space:nowrap;min-width:0;max-width:45%;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.rail-meta.is-warning{color:var(--del)}
+
+/* ───────── 工作台 ───────── */
+.stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr) 1px minmax(0,1fr);min-height:0}
+.divider{background:var(--bg2)}
+.sweep{position:absolute;inset:0 0 auto 0;height:1px;opacity:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.sweep.on{animation:sweep 420ms var(--ease)}
+@keyframes sweep{0%{opacity:0;transform:scaleX(.2)}45%{opacity:.75}100%{opacity:0;transform:scaleX(1)}}
+
+.pane{display:grid;grid-template-rows:38px 1fr;min-width:0;min-height:0}
+.pane-head{display:flex;align-items:center;gap:var(--s2);padding:0 var(--s4) 0 var(--s5);border-bottom:1px solid var(--bg2)}
+.pane-title{font-size:var(--f2);font-weight:500}
+.pane-meta{font-size:var(--f1);color:var(--fg2);font-variant-numeric:tabular-nums}
+.pane-tools{margin-left:auto;display:flex;gap:var(--s1)}
+.ghost{
+  display:flex;align-items:center;gap:var(--s1);height:24px;padding:0 var(--s2);
+  border-radius:var(--r1);font-size:var(--f1);color:var(--fg2);
+  transition:background var(--d1) var(--ease),color var(--d1) var(--ease);
+}
+.ghost:hover{background:var(--bg2);color:var(--fg1)}
+.ghost.done{color:var(--add)}
+.ghost.icon-only{width:24px;padding:0;justify-content:center}
+
+.editor{position:relative;min-height:0;overflow:hidden}
+.hl,.ta{
+  position:absolute;inset:0;margin:0;
+  padding:var(--s4) var(--s3) var(--s5) var(--s5);
+  font:400 var(--f2)/1.75 var(--mono);
+  white-space:pre-wrap;overflow-wrap:break-word;word-break:normal;
+  border:0;background:transparent;tab-size:4;overflow-x:hidden;overflow-y:scroll;
+  scrollbar-width:thin;scrollbar-color:var(--bg2) transparent;
+}
+.hl{color:var(--fg1);pointer-events:none;z-index:0}
+.ta{
+  color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--accent);
+  resize:none;outline:0;z-index:1;overflow-anchor:none;
+}
+.ta::selection{background:var(--accent-soft)}
+.ta::-webkit-scrollbar,.hl::-webkit-scrollbar{width:10px}
+.ta::-webkit-scrollbar-thumb{background:var(--bg2);border-radius:5px;border:3px solid transparent;background-clip:padding-box}
+.hl::-webkit-scrollbar-thumb{background:transparent}
+
+.pane-l .m-hit{background:var(--del-soft);color:var(--del);text-decoration:line-through;
+  text-decoration-color:var(--del);text-decoration-thickness:1px;border-radius:2px}
+.pane-r .m-hit{background:var(--add-soft);color:var(--add);border-radius:2px}
+.pane-c .m-c-a{background:var(--del-soft);color:var(--del);border-radius:2px}
+.pane-c .m-c-b{background:var(--add-soft);color:var(--add);border-radius:2px}
+.pane-c .m-c-both{color:var(--fg1);background:var(--accent-soft);border-radius:2px}
+
+.empty{
+  position:absolute;left:0;right:0;top:38%;display:flex;flex-direction:column;align-items:center;gap:var(--s3);
+  pointer-events:none;transition:opacity var(--d2) var(--ease)
+}
+.empty[hidden]{display:none}
+.empty-text{font-size:var(--f2);color:var(--fg2)}
+@media (max-width:900px){.brand,.actions{width:auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (forced-colors:active){button:focus-visible{box-shadow:none;outline:2px solid Highlight;outline-offset:-2px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="bar">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_811_819)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5996 1.63277e-09C19.8398 1.63277e-09 20.9608 -0.000427067 21.8164 0.435547C22.5689 0.819016 23.181 1.43109 23.5645 2.18359C24.0004 3.03924 24 4.16018 24 6.40039V17.5996C24 19.8398 24.0004 20.9608 23.5645 21.8164C23.181 22.5689 22.5689 23.181 21.8164 23.5645C20.9608 24.0004 19.8398 24 17.5996 24H6.40039C4.16018 24 3.03924 24.0004 2.18359 23.5645C1.43109 23.181 0.819016 22.5689 0.435547 21.8164C-0.000427067 20.9608 1.63345e-09 19.8398 1.63345e-09 17.5996V6.40039C1.63345e-09 4.16018 -0.000427067 3.03924 0.435547 2.18359C0.819016 1.43109 1.43109 0.819016 2.18359 0.435547C3.03924 -0.000427067 4.16018 1.63277e-09 6.40039 1.63277e-09H17.5996ZM6 4V6H12C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18H4V20H12C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4H6ZM4 6.5V8.5H11.75C13.683 8.5 15.25 10.067 15.25 12C15.25 13.933 13.683 15.5 11.75 15.5H6V17.5H11.75L12.0332 17.4932C14.9392 17.3458 17.25 14.9426 17.25 12C17.25 8.96243 14.7876 6.5 11.75 6.5H4Z" fill="#0B45E5"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_811_819">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg>
+      </span>
+      <span class="brand-name">DnR Diffi</span>
+    </div>
+
+    <div class="score" id="score" data-state="empty" aria-live="polite">
+      <div class="s-nums">
+        <span class="s-num add" id="scoreAdd" data-v="0">+0</span>
+        <span class="s-num del" id="scoreDel" data-v="0">−0</span>
+      </div>
+      <div class="s-same">两侧文本完全一致</div>
+      <div class="s-hint">文本比对台</div>
+    </div>
+
+    <div class="actions">
+      <button class="ibtn" id="historyBtn" title="打开版本历史" aria-label="打开版本历史" aria-expanded="false" aria-controls="historyDrawer">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ibtn" id="themeBtn" title="切换主题" aria-label="切换主题">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9c0 .34-.02.67-.06 1A7 7 0 0 1 11 3.06C11.33 3.02 11.66 3 12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="ibtn" id="clearBtn" title="清空全部" aria-label="清空全部">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="rail">
+    <div class="chips" id="chips">
+      <button class="chip" data-opt="ignoreLineBreaks" aria-pressed="false" title="忽略换行    Windows: Alt+1    macOS: ⌥+1"><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v5a4 4 0 0 0 4 4h10M15 10l4 4-4 4M5 19h5"/></svg><span>忽略换行</span></button>
+      <button class="chip" data-opt="ignoreWhitespace" aria-pressed="false" title="忽略空格与制表符    Windows: Alt+2    macOS: ⌥+2"><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M7 9v6M17 9v6"/></svg><span>忽略空格与制表符</span></button>
+      <button class="chip" data-opt="ignoreCase" aria-pressed="false" title="忽略大小写    Windows: Alt+3    macOS: ⌥+3"><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17V7h7a3 3 0 0 1 0 6H4M15 17l2.5-7 2.5 7M16 14h3"/></svg><span>忽略大小写</span></button>
+      <button class="chip" data-opt="ignorePunctuation" aria-pressed="false" title="忽略常见中英文标点    Windows: Alt+4    macOS: ⌥+4"><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2M17 4h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M8 18h.01M12 18h.01M16 18h.01"/></svg><span>忽略中英标点</span></button>
+    </div>
+    <div class="rail-meta" id="railMeta" role="status">粘贴原始文本和对比文本，在编辑文本中继续优化</div>
+  </div>
+
+  <main class="stage">
+    <div class="sweep" id="sweep"></div>
+
+    <section class="pane pane-l">
+      <div class="pane-head">
+        <span class="pane-title">原始文本</span>
+        <span class="pane-meta" id="metaL">0 字符 - 1 行</span>
+        <div class="pane-tools">
+          <button class="ghost icon-only" id="copyL" title="复制" aria-label="复制"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 8h9v9H8zM6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="editor">
+        <div class="hl" id="hlL" aria-hidden="true"></div>
+        <textarea class="ta" id="taL" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="原始文本"></textarea>
+        <div class="empty" id="emptyL">
+          <span class="empty-text">粘贴原始文本</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="pane pane-r">
+      <div class="pane-head">
+        <span class="pane-title">对比文本</span>
+        <span class="pane-meta" id="metaR">0 字符 - 1 行</span>
+        <div class="pane-tools">
+          <button class="ghost icon-only" id="copyR" title="复制" aria-label="复制"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 8h9v9H8zM6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="editor">
+        <div class="hl" id="hlR" aria-hidden="true"></div>
+        <textarea class="ta" id="taR" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="对比文本"></textarea>
+        <div class="empty" id="emptyR">
+          <span class="empty-text">粘贴对比文本</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="pane pane-c">
+      <div class="pane-head">
+        <span class="pane-title">编辑文本</span>
+        <span class="pane-meta" id="metaC">0 字符 - 1 行</span>
+        <div class="pane-tools">
+          <button class="ghost icon-only" id="copyC" title="复制" aria-label="复制"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 8h9v9H8zM6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="editor">
+        <div class="hl" id="hlC" aria-hidden="true"></div>
+        <textarea class="ta" id="taC" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="编辑文本"></textarea>
+        <div class="empty" id="emptyC">
+          <span class="empty-text">参考前两版进行文本编辑</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+<aside class="history-drawer" id="historyDrawer" role="dialog" aria-modal="true" aria-label="版本历史" aria-hidden="true">
+  <div class="history-head">
+    <div class="history-head-copy">
+      <div class="history-title">版本历史</div>
+      <div class="history-subtitle">最多保留 100 个版本</div>
+    </div>
+    <button class="ibtn history-close" id="historyClose" title="关闭版本历史" aria-label="关闭版本历史">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="history-list" id="historyList"></div>
+  <div class="history-foot">
+    <span class="history-foot-note">本页文本与版本保存在此浏览器</span>
+    <button class="ghost history-purge" id="purgeHistory" type="button">彻底删除</button>
+  </div>
+</aside>
+<div class="history-scrim" id="historyScrim" aria-hidden="true"></div>
+
+<div class="confirm-layer" id="clearConfirm" hidden>
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="clearConfirmTitle" aria-describedby="clearConfirmText">
+    <div class="confirm-main">
+      <span class="confirm-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 8v4M12 16h.01M10.3 3.6 2.8 17a2 2 0 0 0 1.75 3h14.9a2 2 0 0 0 1.75-3l-7.5-13.4a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div>
+        <div class="confirm-title" id="clearConfirmTitle">确认清空全部内容？</div>
+        <p class="confirm-text" id="clearConfirmText" aria-live="polite">三列文本将被清空，仍可通过撤销或版本历史恢复。</p>
+      </div>
+    </div>
+    <div class="confirm-actions">
+      <button class="ghost" id="cancelClear">取消</button>
+      <button class="danger-btn" id="confirmClear">确认清空</button>
+    </div>
+  </div>
+</div>
+
+<script id="engine" type="text/js-worker">
+/* 内嵌差异引擎：同一段代码供 Worker 与本地回退使用。 */
+(function (root, factory) {
+  'use strict';
+  var api = factory();
+  if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
+  if (root) { root.DiffCore = api; }
+})(typeof self !== 'undefined' ? self : (typeof globalThis !== 'undefined' ? globalThis : null), function () {
+  'use strict';
+
+  /* ---------- 归一化 ---------- */
+
+  var PUNCT = (function () {
+    var ascii = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+    var cjk = '\uFF0C\u3002\u3001\uFF1B\uFF1A\uFF1F\uFF01\u201C\u201D\u2018\u2019\uFF08\uFF09\u3014\u3015\u3010\u3011' +
+      '\u300A\u300B\u3008\u3009\u300C\u300D\u300E\u300F\uFF5B\uFF5D\uFF3B\uFF3D\u2014\u2026\uFF5E\u00B7\uFF0F' +
+      '\uFF3C\uFF03\uFF06\uFF0A\uFF0B\uFF0D\uFF1D\uFF20\uFF5C\uFF40\uFF04\uFF05\uFF3E\uFF3F\uFE4F\u2025\u3016\u3017\u2022';
+    var set = Object.create(null);
+    var all = ascii + cjk;
+    for (var i = 0; i < all.length; i++) { set[all.charAt(i)] = true; }
+    return set;
+  })();
+
+  var WS = { ' ': true, '\t': true, '\u3000': true, '\u00A0': true, '\u200B': true, '\u2007': true, '\u202F': true };
+
+  function normOpts(o) {
+    o = o || {};
+    return {
+      ignoreLineBreaks: !!o.ignoreLineBreaks,
+      ignoreWhitespace: !!o.ignoreWhitespace,
+      ignoreCase: !!o.ignoreCase,
+      ignorePunctuation: !!o.ignorePunctuation
+    };
+  }
+
+  /* 返回参与比较的键；null 表示该字符被忽略（不参与比较，但仍留在原文中） */
+  function keyOf(ch, o) {
+    if (ch === '\r') { return null; }
+    if (ch === '\n') { return o.ignoreLineBreaks ? null : '\n'; }
+    if (WS[ch] === true) { return o.ignoreWhitespace ? null : ch; }
+    if (o.ignorePunctuation && PUNCT[ch] === true) { return null; }
+    return o.ignoreCase ? ch.toLowerCase() : ch;
+  }
+
+  function interner() {
+    var map = new Map();
+    var next = 1;
+    return function (s) {
+      var v = map.get(s);
+      if (v === undefined) { v = next; next += 1; map.set(s, v); }
+      return v;
+    };
+  }
+
+  /* ---------- Myers：线性空间分治 ---------- */
+
+  function middleSnake(A, a0, a1, B, b0, b1, budget) {
+    var N = a1 - a0;
+    var M = b1 - b0;
+    var delta = N - M;
+    var odd = (delta & 1) !== 0;
+    var maxD = Math.ceil((N + M) / 2);
+    var off = N + M + 1;
+    var size = 2 * (N + M) + 3;
+    var vf = new Int32Array(size);
+    var vb = new Int32Array(size);
+    var d, k, x, y, xs, ys, kb, kf;
+
+    for (d = 0; d <= maxD; d++) {
+      budget.cost -= 1;
+      if (budget.cost < 0) { return null; }
+
+      for (k = -d; k <= d; k += 2) {
+        if (k === -d || (k !== d && vf[off + k - 1] < vf[off + k + 1])) { x = vf[off + k + 1]; }
+        else { x = vf[off + k - 1] + 1; }
+        y = x - k;
+        xs = x; ys = y;
+        while (x < N && y < M && A[a0 + x] === B[b0 + y]) { x += 1; y += 1; }
+        vf[off + k] = x;
+        if (odd) {
+          kb = delta - k;
+          if (kb >= -(d - 1) && kb <= (d - 1) && x + vb[off + kb] >= N) {
+            return { x: a0 + xs, y: b0 + ys, u: a0 + x, v: b0 + y };
+          }
+        }
+      }
+
+      for (k = -d; k <= d; k += 2) {
+        if (k === -d || (k !== d && vb[off + k - 1] < vb[off + k + 1])) { x = vb[off + k + 1]; }
+        else { x = vb[off + k - 1] + 1; }
+        y = x - k;
+        xs = x; ys = y;
+        while (x < N && y < M && A[a1 - x - 1] === B[b1 - y - 1]) { x += 1; y += 1; }
+        vb[off + k] = x;
+        if (!odd) {
+          kf = delta - k;
+          if (kf >= -d && kf <= d && x + vf[off + kf] >= N) {
+            return { x: a1 - x, y: b1 - y, u: a1 - xs, v: b1 - ys };
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  /* 返回按编辑脚本顺序排列的操作：{ t: 0 删除(A) | 1 新增(B), s, e } */
+  function myers(A, B, budget) {
+    var ops = [];
+    var stack = [[0, A.length, 0, B.length]];
+    var frame, a0, a1, b0, b1, ms;
+
+    while (stack.length) {
+      frame = stack.pop();
+      a0 = frame[0]; a1 = frame[1]; b0 = frame[2]; b1 = frame[3];
+
+      while (a0 < a1 && b0 < b1 && A[a0] === B[b0]) { a0 += 1; b0 += 1; }
+      while (a0 < a1 && b0 < b1 && A[a1 - 1] === B[b1 - 1]) { a1 -= 1; b1 -= 1; }
+
+      if (a0 === a1 && b0 === b1) { continue; }
+      if (a0 === a1) { ops.push({ t: 1, s: b0, e: b1 }); continue; }
+      if (b0 === b1) { ops.push({ t: 0, s: a0, e: a1 }); continue; }
+
+      if (budget.cost <= 0 || (a1 - a0) + (b1 - b0) > budget.maxSpan) {
+        ops.push({ t: 0, s: a0, e: a1 });
+        ops.push({ t: 1, s: b0, e: b1 });
+        continue;
+      }
+
+      ms = middleSnake(A, a0, a1, B, b0, b1, budget);
+      if (!ms || (ms.x === a0 && ms.y === b0 && ms.u === a1 && ms.v === b1)) {
+        ops.push({ t: 0, s: a0, e: a1 });
+        ops.push({ t: 1, s: b0, e: b1 });
+        continue;
+      }
+
+      stack.push([ms.u, a1, ms.v, b1]);
+      stack.push([a0, ms.x, b0, ms.y]);
+    }
+    return ops;
+  }
+
+  /* ---------- 分词 ---------- */
+
+  function lineStarts(text) {
+    var arr = [0];
+    var n = text.length;
+    for (var i = 0; i < n; i++) {
+      if (text.charCodeAt(i) === 10) { arr.push(i + 1); }
+    }
+    arr.push(n);
+    return arr; /* 行 i 的范围 = [arr[i], arr[i+1])，行数 = arr.length - 1 */
+  }
+
+  function lineKey(text, s, e, o) {
+    var end = e;
+    if (end > s && text.charCodeAt(end - 1) === 10) { end -= 1; }
+    if (end > s && text.charCodeAt(end - 1) === 13) { end -= 1; }
+    var out = '';
+    var i = s, cp, ch, k;
+    while (i < end) {
+      cp = text.codePointAt(i);
+      ch = String.fromCodePoint(cp);
+      i += ch.length;
+      k = keyOf(ch, o);
+      if (k !== null) { out += k; }
+    }
+    return out;
+  }
+
+  /* 按码点切分并过滤，保留原文 UTF-16 区间以便回映射 */
+  function charTokens(text, s, e, o, intern) {
+    var ids = [];
+    var st = [];
+    var en = [];
+    var i = s, cp, ch, next, k;
+    while (i < e) {
+      cp = text.codePointAt(i);
+      ch = String.fromCodePoint(cp);
+      next = i + ch.length;
+      k = keyOf(ch, o);
+      if (k !== null) { ids.push(intern(k)); st.push(i); en.push(next); }
+      i = next;
+    }
+    return { ids: ids, st: st, en: en };
+  }
+
+  /* 把编辑脚本聚合成区块：同一处的删除与新增合成一个 hunk */
+  function hunksOf(ops) {
+    var hunks = [];
+    var ai = 0, bi = 0, cur = null, gap, i, op;
+    for (i = 0; i < ops.length; i++) {
+      op = ops[i];
+      gap = op.t === 0 ? op.s - ai : op.s - bi;
+      if (gap > 0) {
+        if (cur) { hunks.push(cur); cur = null; }
+        ai += gap; bi += gap;
+      }
+      if (!cur) { cur = { aS: ai, aE: ai, bS: bi, bE: bi }; }
+      if (op.t === 0) { cur.aE = op.e; ai = op.e; }
+      else { cur.bE = op.e; bi = op.e; }
+    }
+    if (cur) { hunks.push(cur); }
+    return hunks;
+  }
+
+  /* ---------- 字符级比对 ---------- */
+
+  function charDiff(aText, as, ae, bText, bs, be, o, budget, out) {
+    var intern = interner();
+    var ta = charTokens(aText, as, ae, o, intern);
+    var tb = charTokens(bText, bs, be, o, intern);
+
+    if (ta.ids.length === 0 && tb.ids.length === 0) { return; }
+    if (ta.ids.length === 0) { out.adds.push([bs, be]); return; }
+    if (tb.ids.length === 0) { out.dels.push([as, ae]); return; }
+
+    var ops = myers(ta.ids, tb.ids, budget);
+    var i, op;
+    for (i = 0; i < ops.length; i++) {
+      op = ops[i];
+      if (op.e <= op.s) { continue; }
+      if (op.t === 0) { out.dels.push([ta.st[op.s], ta.en[op.e - 1]]); }
+      else { out.adds.push([tb.st[op.s], tb.en[op.e - 1]]); }
+    }
+  }
+
+  /* ---------- 块内行配对：先按相似度对齐行，再逐行做字符级 ---------- */
+
+  var MATCH_MIN = 0.28;
+
+  function dice(a, b) {
+    if (a === b) { return 1; }
+    if (a.length < 2 || b.length < 2) { return 0; }
+    var map = new Map();
+    var i, g, c;
+    var hits = 0;
+    for (i = 0; i < a.length - 1; i++) {
+      g = a.substr(i, 2);
+      map.set(g, (map.get(g) || 0) + 1);
+    }
+    for (i = 0; i < b.length - 1; i++) {
+      g = b.substr(i, 2);
+      c = map.get(g) || 0;
+      if (c > 0) { map.set(g, c - 1); hits += 1; }
+    }
+    return (2 * hits) / (a.length - 1 + b.length - 1);
+  }
+
+  /* 返回 [[ai, bj], ...]，ai 或 bj 为 -1 表示该行无对应 */
+  function alignLines(aKeys, bKeys) {
+    var n = aKeys.length;
+    var m = bKeys.length;
+    var w = m + 1;
+    var score = new Float32Array((n + 1) * w);
+    var ptr = new Uint8Array((n + 1) * w); /* 1 配对 / 2 跳过 A / 3 跳过 B */
+    var i, j, idx, s, best, bp, cand;
+
+    for (i = 1; i <= n; i++) { ptr[i * w] = 2; }
+    for (j = 1; j <= m; j++) { ptr[j] = 3; }
+
+    for (i = 1; i <= n; i++) {
+      for (j = 1; j <= m; j++) {
+        idx = i * w + j;
+        best = score[(i - 1) * w + j]; bp = 2;
+        cand = score[i * w + j - 1];
+        if (cand > best) { best = cand; bp = 3; }
+        s = dice(aKeys[i - 1], bKeys[j - 1]);
+        if (s >= MATCH_MIN) {
+          cand = score[(i - 1) * w + j - 1] + s;
+          if (cand > best) { best = cand; bp = 1; }
+        }
+        score[idx] = best;
+        ptr[idx] = bp;
+      }
+    }
+
+    var plan = [];
+    i = n; j = m;
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && ptr[i * w + j] === 1) { plan.push([i - 1, j - 1]); i -= 1; j -= 1; }
+      else if (i > 0 && (j === 0 || ptr[i * w + j] === 2)) { plan.push([i - 1, -1]); i -= 1; }
+      else { plan.push([-1, j - 1]); j -= 1; }
+    }
+    plan.reverse();
+    return plan;
+  }
+
+  /* ---------- 区间 → 分段 ---------- */
+
+  /* cls: 0 普通 / 2 命中（删除或新增） */
+  function buildSegments(len, hits) {
+    var flags = new Uint8Array(len);
+    var i, r;
+    for (i = 0; i < hits.length; i++) {
+      r = hits[i];
+      flags.fill(2, r[0], Math.min(r[1], len));
+    }
+    var segs = [];
+    var start = 0;
+    var cur = len > 0 ? flags[0] : 0;
+    for (i = 1; i < len; i++) {
+      if (flags[i] !== cur) { segs.push(start, i, cur); start = i; cur = flags[i]; }
+    }
+    if (len > 0) { segs.push(start, len, cur); }
+    return Int32Array.from(segs);
+  }
+
+  function countChars(text, ranges) {
+    var total = 0;
+    var i, j, code;
+    for (i = 0; i < ranges.length; i++) {
+      for (j = ranges[i][0]; j < ranges[i][1]; j++) {
+        code = text.charCodeAt(j);
+        if (code === 10 || code === 13) { continue; }
+        if (code >= 0xDC00 && code <= 0xDFFF) { continue; } /* 代理对低位不重复计数 */
+        total += 1;
+      }
+    }
+    return total;
+  }
+
+  /* ---------- 入口 ---------- */
+
+  function compute(aText, bText, options) {
+    var o = normOpts(options);
+    aText = typeof aText === 'string' ? aText : '';
+    bText = typeof bText === 'string' ? bText : '';
+
+    var budget = { cost: 4000000, maxSpan: 400000 };
+    var left = { dels: [] };
+    var right = { adds: [] };
+    if (o.ignoreLineBreaks) {
+      var flat = { dels: left.dels, adds: right.adds };
+      charDiff(aText, 0, aText.length, bText, 0, bText.length, o, budget, flat);
+    } else {
+      var sa = lineStarts(aText);
+      var sb = lineStarts(bText);
+      var intern = interner();
+      var la = sa.length - 1;
+      var lb = sb.length - 1;
+      var A = new Int32Array(la);
+      var B = new Int32Array(lb);
+      var i;
+      for (i = 0; i < la; i++) { A[i] = intern(lineKey(aText, sa[i], sa[i + 1], o)); }
+      for (i = 0; i < lb; i++) { B[i] = intern(lineKey(bText, sb[i], sb[i + 1], o)); }
+
+      var hunks = hunksOf(myers(A, B, budget));
+      var pair = { dels: left.dels, adds: right.adds };
+
+      for (i = 0; i < hunks.length; i++) {
+        var h = hunks[i];
+        var na = h.aE - h.aS;
+        var nb = h.bE - h.bS;
+        var aS = sa[h.aS], aE = sa[h.aE];
+        var bS = sb[h.bS], bE = sb[h.bE];
+
+        if (na === 0) { right.adds.push([bS, bE]); continue; }
+        if (nb === 0) { left.dels.push([aS, aE]); continue; }
+
+        if ((aE - aS) + (bE - bS) > 60000) {
+          pair.dels.push([aS, aE]);
+          pair.adds.push([bS, bE]);
+        } else if (na * nb <= 4096) {
+          var ak = [];
+          var bk = [];
+          var t;
+          for (t = h.aS; t < h.aE; t++) { ak.push(lineKey(aText, sa[t], sa[t + 1], o)); }
+          for (t = h.bS; t < h.bE; t++) { bk.push(lineKey(bText, sb[t], sb[t + 1], o)); }
+          var plan = alignLines(ak, bk);
+          var hasUnpaired = false;
+          for (t = 0; t < plan.length; t++) {
+            if (plan[t][0] < 0 || plan[t][1] < 0) { hasUnpaired = true; break; }
+          }
+          if (hasUnpaired) {
+            /* 行相似度不足时仍回退到整块字符级比对，保留其中真正相同的短语。 */
+            charDiff(aText, aS, aE, bText, bS, bE, o, budget, pair);
+          } else {
+            for (t = 0; t < plan.length; t++) {
+              var ai = plan[t][0];
+              var bj = plan[t][1];
+              charDiff(aText, sa[h.aS + ai], sa[h.aS + ai + 1], bText, sb[h.bS + bj], sb[h.bS + bj + 1], o, budget, pair);
+            }
+          }
+        } else {
+          charDiff(aText, aS, aE, bText, bS, bE, o, budget, pair);
+        }
+      }
+    }
+
+    var stats = {
+      delChars: countChars(aText, left.dels),
+      addChars: countChars(bText, right.adds),
+      identical: left.dels.length === 0 && right.adds.length === 0
+    };
+
+    return {
+      left: buildSegments(aText.length, left.dels),
+      right: buildSegments(bText.length, right.adds),
+      stats: stats
+    };
+  }
+
+  return { compute: compute };
+});
+self.onmessage = function (e) {
+  var d = e.data || {};
+  if (d.type === 'ping') { self.postMessage({ type: 'pong' }); return; }
+  if (d.type !== 'diff') { return; }
+  try {
+    var r = self.DiffCore.compute(d.a, d.b, d.opts);
+    self.postMessage(
+      { type: 'result', seq: d.seq, left: r.left, right: r.right, stats: r.stats },
+      [r.left.buffer, r.right.buffer]
+    );
+  } catch (err) {
+    self.postMessage({ type: 'error', seq: d.seq, message: String((err && err.message) || err) });
+  }
+};
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var IS_MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+
+  var taL = $('taL'), taR = $('taR'), taC = $('taC'), hlL = $('hlL'), hlR = $('hlR'), hlC = $('hlC');
+  var metaL = $('metaL'), metaR = $('metaR'), metaC = $('metaC'), emptyL = $('emptyL'), emptyR = $('emptyR'), emptyC = $('emptyC');
+  var score = $('score'), scoreAdd = $('scoreAdd'), scoreDel = $('scoreDel');
+  var railMeta = $('railMeta'), sweep = $('sweep');
+  var historyBtn = $('historyBtn'), historyDrawer = $('historyDrawer'), historyClose = $('historyClose'), historyList = $('historyList'), historyScrim = $('historyScrim');
+  var app = document.querySelector('.app'), purgeHistory = $('purgeHistory');
+  var clearConfirm = $('clearConfirm'), confirmTitle = $('clearConfirmTitle'), confirmText = $('clearConfirmText');
+  var cancelClear = $('cancelClear'), confirmClear = $('confirmClear');
+
+  var opts = { ignoreLineBreaks: false, ignoreWhitespace: false, ignoreCase: false, ignorePunctuation: false };
+  var STORAGE_SCOPE = location.pathname || 'default';
+  var CACHE_KEY = 'diffi.text.' + STORAGE_SCOPE;
+  var THEME_KEY = 'diffi.theme.' + STORAGE_SCOPE;
+  var MAX_VERSIONS = 100;
+  var versionHistory = [], versionIndex = -1, versionTimer = null;
+  var seq = 0, pending = 0, timer = null;
+  var confirmMode = 'clear', confirmReturnFocus = null, storagePurged = false;
+  var storageWarning = '', engineWarning = '', infoMessage = '';
+  var DEFAULT_HINT = '粘贴原始文本和对比文本，在编辑文本中继续优化';
+
+  function updateStatus() {
+    var message = storageWarning || engineWarning || infoMessage || DEFAULT_HINT;
+    railMeta.textContent = message;
+    railMeta.title = message === DEFAULT_HINT ? '' : message;
+    railMeta.classList.toggle('is-warning', !!(storageWarning || engineWarning));
+  }
+
+
+  /* ── 主题 ── */
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    setTheme(saved === 'light' ? 'light' : 'dark');
+  })();
+  $('themeBtn').addEventListener('click', function () {
+    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  function setHistoryOpen(open) {
+    historyDrawer.classList.toggle('is-open', open);
+    historyScrim.classList.toggle('is-open', open);
+    historyDrawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    historyScrim.setAttribute('aria-hidden', open ? 'false' : 'true');
+    historyBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    app.inert = open || !clearConfirm.hidden;
+    historyDrawer.inert = !clearConfirm.hidden;
+    if (open) { flushVersion(); renderHistory(); historyClose.focus(); }
+    else { historyBtn.focus(); }
+  }
+  historyBtn.addEventListener('click', function () { setHistoryOpen(!historyDrawer.classList.contains('is-open')); });
+  historyClose.addEventListener('click', function () { setHistoryOpen(false); });
+  historyScrim.addEventListener('click', function () { setHistoryOpen(false); });
+  historyList.addEventListener('click', function (e) {
+    var row = e.target.closest ? e.target.closest('.history-row') : null;
+    if (!row) { return; }
+    flushVersion();
+    applyVersion(Number(row.getAttribute('data-index')));
+    setHistoryOpen(false);
+  });
+
+  /* ── 引擎：优先 Worker，失败回落主线程 ── */
+  var src = $('engine').textContent;
+  var worker = null, workerReady = false, localCompute = null, localCore = null;
+
+  (function bootLocal() {
+    var fake = { postMessage: function (msg) { onEngineMessage({ data: msg }); } };
+    try {
+      new Function('self', src)(fake);
+      localCore = fake.DiffCore;
+      localCompute = function (payload) { fake.onmessage({ data: payload }); };
+    } catch (e) { localCompute = null; }
+  })();
+
+  (function bootWorker() {
+    try {
+      var url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      worker = new Worker(url);
+      worker.onmessage = function (e) {
+        if (e.data && e.data.type === 'pong') { workerReady = true; return; }
+        onEngineMessage(e);
+      };
+      worker.onerror = function () {
+        worker = null; workerReady = false;
+        schedule(0);
+      };
+      worker.postMessage({ type: 'ping' });
+    } catch (e) {
+      worker = null;
+    }
+  })();
+
+  /* ── 渲染 ── */
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#39;';
+    });
+  }
+
+  function paintPlain(hl, text) { hl.textContent = text + '\u200B'; }
+
+  function paint(hl, text, segs) {
+    var out = [];
+    for (var i = 0; i < segs.length; i += 3) {
+      var piece = escapeHtml(text.slice(segs[i], segs[i + 1]));
+      var c = segs[i + 2];
+      out.push(c === 2 ? '<span class="m-hit">' + piece + '</span>' : piece);
+    }
+    hl.innerHTML = out.join('') + '\u200B';
+  }
+
+  function paintThird(hl, text, fromA, fromB) {
+    var out = [], pos = 0, ia = 0, ib = 0, end, sameA, sameB, cls, piece;
+    if (!text) { hl.textContent = '\u200B'; return; }
+    while (pos < text.length && ia < fromA.length && ib < fromB.length) {
+      while (ia < fromA.length && pos >= fromA[ia + 1]) { ia += 3; }
+      while (ib < fromB.length && pos >= fromB[ib + 1]) { ib += 3; }
+      if (ia >= fromA.length || ib >= fromB.length) { break; }
+      end = Math.min(fromA[ia + 1], fromB[ib + 1]);
+      if (end <= pos) { break; }
+      sameA = fromA[ia + 2] !== 2;
+      sameB = fromB[ib + 2] !== 2;
+      cls = sameA && sameB ? 'm-c-both' : sameA ? 'm-c-a' : sameB ? 'm-c-b' : '';
+      piece = escapeHtml(text.slice(pos, end));
+      out.push(cls ? '<span class="' + cls + '">' + piece + '</span>' : piece);
+      pos = end;
+    }
+    if (pos < text.length) { out.push(escapeHtml(text.slice(pos))); }
+    hl.innerHTML = out.join('') + '\u200B';
+  }
+
+  function fmt(n) { return n.toLocaleString('zh-CN'); }
+
+  function roll(el, to, prefix) {
+    var from = parseInt(el.getAttribute('data-v') || '0', 10);
+    el.setAttribute('data-v', String(to));
+    if (from === to) { el.textContent = prefix + fmt(to); return; }
+    var t0 = performance.now();
+    (function step(t) {
+      var p = Math.min(1, (t - t0) / 260);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + fmt(Math.round(from + (to - from) * e));
+      if (p < 1) { requestAnimationFrame(step); }
+    })(t0);
+    if (el.animate) { el.animate([{ transform: 'translateY(-2px)' }, { transform: 'none' }], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' }); }
+  }
+
+  function countLines(s) { var n = 1, i = -1; while ((i = s.indexOf('\n', i + 1)) !== -1) { n += 1; } return n; }
+
+  function updateMeta() {
+    var a = taL.value, b = taR.value, c = taC.value;
+    metaL.textContent = fmt(a.length) + ' 字符 - ' + fmt(countLines(a)) + ' 行';
+    metaR.textContent = fmt(b.length) + ' 字符 - ' + fmt(countLines(b)) + ' 行';
+    metaC.textContent = fmt(c.length) + ' 字符 - ' + fmt(countLines(c)) + ' 行';
+    emptyL.hidden = a.length > 0;
+    emptyR.hidden = b.length > 0;
+    emptyC.hidden = c.length > 0;
+  }
+
+  /* ── 版本历史与文本缓存 ── */
+  function readState() { return { a: taL.value, b: taR.value, c: taC.value }; }
+  function sameState(a, b) { return !!a && !!b && a.a === b.a && a.b === b.b && a.c === b.c; }
+  function snapshot(state, time) { return { a: state.a, b: state.b, c: state.c, t: time || Date.now() }; }
+  function validSnapshot(item) {
+    return !!item && typeof item.a === 'string' && typeof item.b === 'string' && typeof item.c === 'string';
+  }
+  function ensureVersionHistory() {
+    if (!versionHistory.length) { versionHistory = [snapshot(readState())]; versionIndex = 0; }
+    if (versionIndex < 0 || versionIndex >= versionHistory.length) { versionIndex = versionHistory.length - 1; }
+  }
+  function trimVersionHistory() {
+    if (versionHistory.length <= MAX_VERSIONS) { return; }
+    var remove = versionHistory.length - MAX_VERSIONS;
+    versionHistory = versionHistory.slice(remove);
+    versionIndex = Math.max(0, versionIndex - remove);
+  }
+  function saveCache() {
+    if (storagePurged) { return; }
+    ensureVersionHistory();
+    var payload = {
+      a: taL.value, b: taR.value, c: taC.value,
+      history: versionHistory, index: versionIndex
+    };
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+      storageWarning = '';
+    } catch (e) {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ a: taL.value, b: taR.value, c: taC.value }));
+        storageWarning = '本地空间不足：当前文本已保存，版本历史仅在本次打开期间可用';
+      } catch (ignore) {
+        storageWarning = '本地存储不可用：关闭页面后文本与版本可能丢失';
+      }
+    }
+    updateStatus();
+  }
+  function restoreCache() {
+    var raw, saved, restored = false;
+    try {
+      raw = localStorage.getItem(CACHE_KEY);
+    } catch (e) { raw = null; }
+    if (raw) {
+      try { saved = JSON.parse(raw); } catch (e) { saved = null; }
+    }
+    if (saved && Array.isArray(saved.history)) {
+      versionHistory = [];
+      for (var i = 0; i < saved.history.length; i++) {
+        if (validSnapshot(saved.history[i])) { versionHistory.push(snapshot(saved.history[i], Number(saved.history[i].t) || Date.now())); }
+      }
+      trimVersionHistory();
+      versionIndex = Number(saved.index);
+      if (!isFinite(versionIndex)) { versionIndex = versionHistory.length - 1; }
+      ensureVersionHistory();
+      taL.value = typeof saved.a === 'string' ? saved.a : '';
+      taR.value = typeof saved.b === 'string' ? saved.b : '';
+      taC.value = typeof saved.c === 'string' ? saved.c : '';
+      var cachedState = readState();
+      if (!sameState(versionHistory[versionIndex], cachedState)) {
+        if (versionIndex < versionHistory.length - 1) { versionHistory = versionHistory.slice(0, versionIndex + 1); }
+        versionHistory.push(snapshot(cachedState));
+        versionIndex = versionHistory.length - 1;
+        trimVersionHistory();
+      }
+      restored = !!(taL.value || taR.value || taC.value);
+    } else if (saved && typeof saved === 'object') {
+      taL.value = typeof saved.a === 'string' ? saved.a : '';
+      taR.value = typeof saved.b === 'string' ? saved.b : '';
+      taC.value = typeof saved.c === 'string' ? saved.c : '';
+      var restoredState = readState();
+      versionHistory = [snapshot({ a: '', b: '', c: '' }, Date.now() - 1), snapshot(restoredState)];
+      versionIndex = 1;
+      restored = !!(taL.value || taR.value || taC.value);
+      storageWarning = '仅恢复当前文本：此前的版本历史未保存';
+    }
+    ensureVersionHistory();
+    updateStatus();
+    return restored;
+  }
+  function queueVersion() {
+    if (versionTimer) { clearTimeout(versionTimer); }
+    versionTimer = setTimeout(commitVersion, 420);
+  }
+  function flushVersion() {
+    if (versionTimer) { clearTimeout(versionTimer); versionTimer = null; commitVersion(); }
+  }
+  function commitVersion() {
+    versionTimer = null;
+    ensureVersionHistory();
+    var state = readState();
+    if (sameState(versionHistory[versionIndex], state)) { saveCache(); renderHistory(); return false; }
+    if (versionIndex < versionHistory.length - 1) { versionHistory = versionHistory.slice(0, versionIndex + 1); }
+    versionHistory.push(snapshot(state));
+    versionIndex = versionHistory.length - 1;
+    trimVersionHistory();
+    saveCache();
+    renderHistory();
+    return true;
+  }
+  function applyVersion(index) {
+    var item = versionHistory[index];
+    if (!item) { return; }
+    versionIndex = index;
+    taL.value = item.a; taR.value = item.b; taC.value = item.c;
+    saveCache();
+    renderHistory();
+    schedule(0);
+  }
+  function versionTime(time) {
+    var d = new Date(time || Date.now());
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0');
+  }
+  function versionSummary(item) {
+    var text = item.c || item.b || item.a || '空白文本';
+    text = text.replace(/[\r\n]+/g, ' ').trim();
+    if (text.length > 28) { text = text.slice(0, 28) + '…'; }
+    return 'A ' + fmt(item.a.length) + ' - B ' + fmt(item.b.length) + ' - C ' + fmt(item.c.length) + ' - ' + (text || '空白文本');
+  }
+  function renderHistory() {
+    historyList.innerHTML = '';
+    if (!versionHistory.length) {
+      historyList.innerHTML = '<div class="history-empty">暂无版本历史</div>';
+      return;
+    }
+    for (var i = versionHistory.length - 1; i >= 0; i--) {
+      var item = versionHistory[i];
+      var row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'history-row' + (i === versionIndex ? ' is-current' : '');
+      row.setAttribute('data-index', String(i));
+      row.innerHTML = '<span class="history-row-top"><span class="history-row-title">' + (i === 0 ? '初始版本' : '版本 ' + (i + 1)) + '</span>' +
+        (i === versionIndex ? '<span class="history-row-current">当前</span>' : '') +
+        '<span class="history-row-time">' + versionTime(item.t) + '</span></span>' +
+        '<span class="history-row-summary">' + escapeHtml(versionSummary(item)) + '</span>';
+      historyList.appendChild(row);
+    }
+  }
+  function undoVersion() {
+    flushVersion();
+    ensureVersionHistory();
+    if (versionIndex <= 0) { return; }
+    applyVersion(versionIndex - 1);
+  }
+  function openConfirm(mode, trigger) {
+    if (mode === 'clear' && !taL.value && !taR.value && !taC.value) { return; }
+    confirmMode = mode;
+    confirmReturnFocus = trigger;
+    confirmTitle.textContent = mode === 'purge' ? '彻底删除本地文本与版本？' : '确认清空全部内容？';
+    confirmText.textContent = mode === 'purge'
+      ? '本页三列文本和全部版本将从此浏览器删除，无法恢复。主题设置保留。'
+      : '三列文本将被清空，但会记录为一个版本。可用 ' + (IS_MAC ? 'Command' : 'Ctrl') + ' + Z 或版本历史恢复。';
+    confirmClear.textContent = mode === 'purge' ? '彻底删除' : '确认清空';
+    clearConfirm.hidden = false;
+    app.inert = true;
+    historyDrawer.inert = true;
+    if (historyDrawer.classList.contains('is-open')) { historyDrawer.setAttribute('aria-hidden', 'true'); }
+    cancelClear.focus();
+  }
+  function openClearConfirm() { openConfirm('clear', document.activeElement); }
+  function closeClearConfirm() {
+    clearConfirm.hidden = true;
+    app.inert = historyDrawer.classList.contains('is-open');
+    historyDrawer.inert = false;
+    if (historyDrawer.classList.contains('is-open')) { historyDrawer.setAttribute('aria-hidden', 'false'); }
+    var target = confirmReturnFocus;
+    confirmReturnFocus = null;
+    if (target && target.isConnected) { target.focus(); }
+    else if (historyDrawer.classList.contains('is-open')) { historyClose.focus(); }
+    else { $('clearBtn').focus(); }
+  }
+  function performClear() {
+    if (confirmMode === 'purge') {
+      try { localStorage.removeItem(CACHE_KEY); }
+      catch (e) {
+        confirmText.textContent = '浏览器阻止删除本地数据。请检查存储权限后重试。';
+        return;
+      }
+      closeClearConfirm();
+      if (historyDrawer.classList.contains('is-open')) { setHistoryOpen(false); }
+      if (versionTimer) { clearTimeout(versionTimer); versionTimer = null; }
+      storagePurged = true;
+      taL.value = ''; taR.value = ''; taC.value = '';
+      versionHistory = []; versionIndex = -1;
+      storageWarning = ''; engineWarning = ''; infoMessage = '本页文本与版本已删除';
+      updateStatus();
+      renderHistory();
+      schedule(0);
+      return;
+    }
+    closeClearConfirm();
+    flushVersion();
+    if (!taL.value && !taR.value && !taC.value) { return; }
+    taL.value = ''; taR.value = ''; taC.value = '';
+    commitVersion();
+    schedule(0);
+    $('clearBtn').focus();
+  }
+  function trapTab(container, e) {
+    var buttons = container.querySelectorAll('button:not([disabled])');
+    if (!buttons.length) { return; }
+    var first = buttons[0], last = buttons[buttons.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !container.contains(document.activeElement))) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && (document.activeElement === last || !container.contains(document.activeElement))) {
+      e.preventDefault(); first.focus();
+    }
+  }
+  cancelClear.addEventListener('click', closeClearConfirm);
+  confirmClear.addEventListener('click', performClear);
+  purgeHistory.addEventListener('click', function () { openConfirm('purge', purgeHistory); });
+  clearConfirm.addEventListener('click', function (e) { if (e.target === clearConfirm) { closeClearConfirm(); } });
+
+  /* ── 调度 ── */
+  function schedule(delay) {
+    updateMeta();
+    paintPlain(hlL, taL.value);
+    paintPlain(hlR, taR.value);
+    paintPlain(hlC, taC.value);
+    if (timer) { clearTimeout(timer); }
+    timer = setTimeout(runDiff, delay === 0 ? 0 : 110);
+  }
+
+  function runDiff() {
+    var a = taL.value, b = taR.value, c = taC.value;
+    if (!a && !b && !c) {
+      score.setAttribute('data-state', 'empty');
+      scoreAdd.setAttribute('data-v', '0'); scoreDel.setAttribute('data-v', '0');
+      engineWarning = ''; updateStatus();
+      return;
+    }
+    seq += 1;
+    pending = seq;
+    var payload = { type: 'diff', seq: seq, a: a, b: b, c: c, opts: opts };
+    if (worker && workerReady) { worker.postMessage(payload); }
+    else if (localCompute) { localCompute(payload); }
+    else { pending = 0; engineWarning = '比对引擎不可用，当前结果未更新'; updateStatus(); }
+  }
+
+  function onEngineMessage(e) {
+    var d = e.data || {};
+    if (d.type === 'error') {
+      if (d.seq !== pending) { return; }
+      pending = 0;
+      engineWarning = '比对失败，当前结果未更新'; updateStatus();
+      return;
+    }
+    if (d.type !== 'result' || d.seq !== pending) { return; }
+    pending = 0;
+    engineWarning = ''; updateStatus();
+
+    /* 任一基准文本为空时，不把另一列的全部内容误判为新增或删除。 */
+    if (taL.value && taR.value) {
+      paint(hlL, taL.value, d.left);
+      paint(hlR, taR.value, d.right);
+    } else {
+      paintPlain(hlL, taL.value);
+      paintPlain(hlR, taR.value);
+    }
+    var thirdA = new Int32Array(0), thirdB = new Int32Array(0);
+    if (taC.value && localCore) {
+      thirdA = localCore.compute(taC.value, taL.value, opts).left;
+      thirdB = localCore.compute(taC.value, taR.value, opts).left;
+    }
+    paintThird(hlC, taC.value, thirdA, thirdB);
+    syncScroll(taL, hlL); syncScroll(taR, hlR); syncScroll(taC, hlC);
+
+    var st = d.stats;
+    if (st.identical) {
+      score.setAttribute('data-state', 'same');
+      scoreAdd.setAttribute('data-v', '0'); scoreDel.setAttribute('data-v', '0');
+    } else {
+      score.setAttribute('data-state', 'diff');
+      roll(scoreAdd, st.addChars, '+');
+      roll(scoreDel, st.delChars, '\u2212');
+    }
+
+    sweep.classList.remove('on');
+    void sweep.offsetWidth;
+    sweep.classList.add('on');
+  }
+
+  /* ── 滚动同步 ── */
+  function syncScroll(ta, hl) { hl.scrollTop = ta.scrollTop; }
+  taL.addEventListener('scroll', function () { syncScroll(taL, hlL); });
+  taR.addEventListener('scroll', function () { syncScroll(taR, hlR); });
+  taC.addEventListener('scroll', function () { syncScroll(taC, hlC); });
+
+  function onTextInput() { storagePurged = false; infoMessage = ''; saveCache(); queueVersion(); schedule(); }
+  taL.addEventListener('input', onTextInput);
+  taR.addEventListener('input', onTextInput);
+  taC.addEventListener('input', onTextInput);
+
+  /* ── 选项 ── */
+  function toggleOpt(name) {
+    opts[name] = !opts[name];
+    var chip = document.querySelector('.chip[data-opt="' + name + '"]');
+    chip.setAttribute('aria-pressed', opts[name] ? 'true' : 'false');
+    schedule(0);
+  }
+  $('chips').addEventListener('click', function (e) {
+    var chip = e.target.closest ? e.target.closest('.chip') : null;
+    if (chip) { toggleOpt(chip.getAttribute('data-opt')); }
+  });
+
+  /* ── 复制 ── */
+  function copy(ta, btn) {
+    var text = ta.value;
+    var done = function () {
+      btn.classList.add('done');
+      btn.setAttribute('aria-label', '已复制');
+      btn.title = '已复制';
+      setTimeout(function () {
+        btn.classList.remove('done');
+        btn.setAttribute('aria-label', '复制');
+        btn.title = '复制';
+      }, 1400);
+    };
+    if (!text) { return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { legacyCopy(ta); done(); });
+    } else { legacyCopy(ta); done(); }
+  }
+  function legacyCopy(ta) {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    ta.select();
+    try { document.execCommand('copy'); } catch (err) {}
+    ta.setSelectionRange(s, e);
+  }
+  $('copyL').addEventListener('click', function () { copy(taL, $('copyL')); });
+  $('copyR').addEventListener('click', function () { copy(taR, $('copyR')); });
+  $('copyC').addEventListener('click', function () { copy(taC, $('copyC')); });
+
+  /* ── 清空 + 撤销 ── */
+  $('clearBtn').addEventListener('click', openClearConfirm);
+
+  /* ── 快捷键 ── */
+  document.addEventListener('keydown', function (e) {
+    if (!clearConfirm.hidden) {
+      if (e.key === 'Escape') { e.preventDefault(); closeClearConfirm(); }
+      else if (e.key === 'Tab') { trapTab(clearConfirm, e); }
+      return;
+    }
+    if (historyDrawer.classList.contains('is-open')) {
+      if (e.key === 'Escape') { e.preventDefault(); setHistoryOpen(false); }
+      else if (e.key === 'Tab') { trapTab(historyDrawer, e); }
+      return;
+    }
+    var mod = IS_MAC ? e.metaKey : e.ctrlKey;
+    if (e.altKey && !mod && e.key >= '1' && e.key <= '4') {
+      var names = ['ignoreLineBreaks', 'ignoreWhitespace', 'ignoreCase', 'ignorePunctuation'];
+      e.preventDefault();
+      toggleOpt(names[Number(e.key) - 1]);
+      return;
+    }
+    if (!mod) { return; }
+    var k = e.key.toLowerCase();
+    if (k === '1') { e.preventDefault(); taL.focus(); }
+    else if (k === '2') { e.preventDefault(); taR.focus(); }
+    else if (k === '3') { e.preventDefault(); taC.focus(); }
+    else if (k === 'z' && !e.shiftKey) {
+      if (document.activeElement === taL || document.activeElement === taR || document.activeElement === taC) { return; }
+      e.preventDefault(); undoVersion();
+    }
+    else if (k === 'd') { e.preventDefault(); $('themeBtn').click(); }
+    else if (k === 'backspace' || k === 'delete') { e.preventDefault(); openClearConfirm(); }
+    else if (k === 'c' && e.shiftKey) {
+      e.preventDefault();
+      if (document.activeElement === taR) { copy(taR, $('copyR')); }
+      else if (document.activeElement === taC) { copy(taC, $('copyC')); }
+      else { copy(taL, $('copyL')); }
+    }
+  });
+
+  /* ── 首屏 ── */
+  var restored = restoreCache();
+  renderHistory();
+  if (restored) { schedule(0); }
+  else {
+    updateMeta();
+    paintPlain(hlL, ''); paintPlain(hlR, ''); paintPlain(hlC, '');
+  }
+  window.addEventListener('beforeunload', function () { flushVersion(); saveCache(); });
+})();
+</script>
+</body>
+</html>
